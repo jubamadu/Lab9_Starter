@@ -7,6 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 9</title>
 
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+  window.TrackJS && TrackJS.install({ 
+    token: "646c44402a424a848820c89ea61f815f"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+</script>
+                        
+
+
   <style>
     button {
       margin: 3px;
@@ -95,13 +105,102 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try{
+        isNum(firstNum);
+        isNum(secondNum);
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }
+      catch(e){
+        console.error(e);
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+    function isNum(num){
+      if(isNaN(num)){
+        throw new Error('Value is not a Number');
+      }
+    }
+
+    errorBtns[0].addEventListener('click', function(){console.log('Console Log Button Clicked');});
+   
+    errorBtns[1].addEventListener('click', function(){console.error('Console Error Button Clicked');});
+    
+    errorBtns[2].addEventListener('click', function(){
+      console.count('Console Count');
+    });
+
+    errorBtns[3].addEventListener('click', function(){
+      console.warn('Console Warn Button Clicked');
+    });
+
+    errorBtns[4].addEventListener('click', function(){
+      let x = 3;
+      const errorMsg = 'Not Even';
+      try{
+        console.assert(x % 2 == 0, "%o", {x, errorMsg});
+      }
+      catch(e){
+        console.error(e);
+      }
+      
+    });
+
+    errorBtns[5].addEventListener('click', function(){console.clear();});
+    
+    errorBtns[6].addEventListener('click', function(){
+      console.dir(['1','2','3']);
+    });
+
+    errorBtns[7].addEventListener('click', function(){
+      console.dirxml(['1','2','3']);
+    });
+
+    errorBtns[8].addEventListener('click', function(){console.group();});
+
+    errorBtns[9].addEventListener('click', function(){console.groupEnd();});
+
+    errorBtns[10].addEventListener('click', function(){console.table(['Item 1','Item 2','Item 3']);});
+
+    errorBtns[11].addEventListener('click', function(){console.time("Timer Button");});
+
+    errorBtns[12].addEventListener('click', function(){
+      try {
+        console.timeEnd("Timer Button");
+      }
+      catch(e){
+        console.log(e.message);
+      }
+      });
+
+    errorBtns[13].addEventListener('click', function(){
+      function top() {
+        function middle() {
+          function bottom() {
+            console.trace();
+          }
+          bottom();
+        }
+        middle();
+      }
+      top();
+    });
+
+    errorBtns[14].addEventListener('click', function(){
+      console.assert(x % 2 == 0, "%o", {x, errorMsg});
+        
+      });
+
+      window.addEventListener("error", (event) => {
+        console.log(`${event.type}: ${event.message}\n`);
+      });
+
+
+    TrackJS.track('Testing TrackJS!');
+                        
   </script>
 </body>
 
